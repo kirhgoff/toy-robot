@@ -28,10 +28,10 @@ end
 #----------------------------------
 
 class Direction
-  LEFT = {:south => :east, :north => :west, :east => :south, :west => :north}
-  RIGHT = {:south => :west, :north => :east, :east => :north, :west => :south}
+  LEFT = {:south => :east, :north => :west, :east => :north, :west => :south}
+  RIGHT = LEFT.invert
 
-  attr_accessor :value
+  attr_reader :value
 
   def initialize(value)
     unless LEFT.key?(value)

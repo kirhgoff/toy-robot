@@ -45,11 +45,12 @@ class TestNAME < Test::Unit::TestCase
     assert_equal roboto.to_s, "Roboto is at [1, 1] and is looking south"
   end
 
-  def test_direction_works_properly
-    direction = Direction.new(:north)
+  def test_turning_works_properly
+    assert_equal(direction(:north).turn_left, direction(:west))
+    assert_equal(direction(:north).turn_right, direction(:east))
 
-    assert_equal(direction.turn_left.value, :west)
-    assert_equal(direction.turn_right.value, :east)
+    assert_equal(direction(:west).turn_left, direction(:south))
+    assert_equal(direction(:west).turn_right, direction(:north))
   end
 
   def position (x, y)
