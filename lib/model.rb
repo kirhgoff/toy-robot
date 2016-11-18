@@ -6,16 +6,22 @@ class Position
   end
 
   def move(direction)
-    case direction
-      when :south then Position.new(x, y-1)
-      when :north then Position.new(x, y+1)
+    case direction.value
+      when :north then Position.new(x, y-1)
+      when :south then Position.new(x, y+1)
       when :west then Position.new(x-1, y)
       when :east then Position.new(x+1, y)
+      else
+        raise "Unknown direction " + direction
     end
   end
 
   def to_s
     "[#{x}, #{y}]"
+  end
+
+  def ==(other)
+    x == other.x && y == other.y
   end
 end
 
@@ -28,6 +34,9 @@ class Direction
   attr_accessor :value
 
   def initialize(value)
+    unless LEFT.key?(value)
+      raise ArgumentError, "Cannot accept value #{value}, should be one of #{LEFT.keys}"
+    end
     @value = value
   end
 
@@ -43,6 +52,9 @@ class Direction
     value.to_s
   end
 
+  def ==(other)
+    value == other.value
+  end
 end
 
 #----------------------------------
