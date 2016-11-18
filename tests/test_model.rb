@@ -6,9 +6,6 @@ class TestNAME < Test::Unit::TestCase
 
   def test_is_valid
     board = Board.new(5, 5)
-    def position (x, y)
-      Position.new(x, y)
-    end
 
     assert_true(board.is_valid(position(1, 1)))
     assert_true(board.is_valid(position(0, 0)))
@@ -18,4 +15,16 @@ class TestNAME < Test::Unit::TestCase
     assert_false(board.is_valid(position(0, 5)))
   end
 
+  def test_roboto_to_s
+    roboto = Roboto.new
+    assert_equal(roboto.to_s, "Roboto is nowhere and is not looking at any direction")
+    roboto.position = position(1, 1)
+    assert_equal(roboto.to_s, "Roboto is at [1, 1] and is not looking at any direction")
+    roboto.direction = :south
+    assert_equal(roboto.to_s, "Roboto is at [1, 1] and is looking south")
+  end
+
+  def position (x, y)
+    Position.new(x, y)
+  end
 end
