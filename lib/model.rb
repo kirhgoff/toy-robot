@@ -21,7 +21,7 @@ class Position
   end
 
   def ==(other)
-    x == other.x && y == other.y
+    other != nil && x == other.x && y == other.y
   end
 end
 
@@ -53,7 +53,7 @@ class Direction
   end
 
   def ==(other)
-    value == other.value
+    other != nil && value == other.value
   end
 end
 
@@ -72,12 +72,17 @@ class Board
       position.y >= 0 &&
       position.y < height
   end
+
 end
 
 #----------------------------------
 
 class Roboto
   attr_accessor :position, :direction
+
+  def is_placed?
+    position != nil && direction != nil
+  end
 
   def to_s
     position_str = position.nil? ? "nowhere" : "at " + position.to_s

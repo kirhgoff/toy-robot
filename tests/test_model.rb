@@ -1,8 +1,10 @@
 require "test/unit"
+require "test_utils"
 
 require "model"
 
-class TestNAME < Test::Unit::TestCase
+class TestModel < Test::Unit::TestCase
+  include TestUtils
 
   def test_board_is_valid
     board = Board.new(5, 5)
@@ -32,16 +34,19 @@ class TestNAME < Test::Unit::TestCase
     assert_equal position.move(direction(:east)), position(1, 0)
   end
 
-  def test_roboto_to_s
+  def test_roboto_placed_report
     roboto = Roboto.new
+    assert_false roboto.is_placed?
     assert_equal roboto.to_s,
                  "Roboto is nowhere and is not looking at any direction"
 
     roboto.position = position(1, 1)
+    assert_false roboto.is_placed?
     assert_equal roboto.to_s,
                  "Roboto is at [1, 1] and is not looking at any direction"
 
     roboto.direction = :south
+    assert_true roboto.is_placed?
     assert_equal roboto.to_s, "Roboto is at [1, 1] and is looking south"
   end
 
@@ -52,13 +57,4 @@ class TestNAME < Test::Unit::TestCase
     assert_equal(direction(:west).turn_left, direction(:south))
     assert_equal(direction(:west).turn_right, direction(:north))
   end
-
-  def position (x, y)
-    Position.new(x, y)
-  end
-
-  def direction (v)
-    Direction.new(v)
-  end
-
 end
