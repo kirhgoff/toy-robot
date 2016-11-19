@@ -94,7 +94,7 @@ class Roboto
     direction_str = direction.nil? ?
       "not looking at any direction" : "looking " + direction.to_s
 
-    "Roboto is #{position_str} and is #{direction_str}"
+    "I am #{position_str} and is #{direction_str}"
   end
 end
 

@@ -20,6 +20,9 @@ class CommandsFactory
 
   def parse_params(string)
     result = [nil, nil]
+    if string == nil
+      string = ""
+    end
     params = string.split(",")
     if params.length == 3
       x = number_or_nil(params[0].strip)
@@ -65,7 +68,7 @@ class MoveCommand
     new_position = robot.position.move robot.direction
     if board.is_valid(new_position)
       robot.position = new_position
-      "Moving. My new position is #{new_position}, master."
+      "Moving. My new position is #{new_position} and looking #{robot.direction}, master."
     else
       "Why do you want to kill me, master? I can't go there."
     end
@@ -86,7 +89,7 @@ class TurnCommand
   def apply(robot, board)
     old_direction = robot.direction
     robot.direction = old_direction.send(turn)
-    "Turning #{TURNS[turn]}, master."
+    "Turning #{TURNS[turn]}, master. Now I am facing #{robot.direction}"
   end
 end
 
@@ -114,9 +117,9 @@ class PlaceCommand
         "Master, there is no such place on a board #{position}."
       end
     elsif position == nil
-      "Master, you need to tell me where to go!"
+      "Master, you need to tell me where to warp to!"
     else
-      "Master, I need direction to face to"
+      "Master, I need correct direction to face to"
     end
   end
 end
@@ -129,6 +132,6 @@ class UnknownCommand
   end
 
   def apply(robot, board)
-    "Heh? Not sure what to do, master. What is #{wrong_command}"
+    "Heh? Not sure what to do, master. What is #{wrong_command}?"
   end
 end
