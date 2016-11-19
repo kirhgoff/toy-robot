@@ -1,11 +1,11 @@
-require File.dirname(__FILE__) + '/model' #How to make it work properly?!
-require File.dirname(__FILE__) + '/commands'
+require './lib/model'
+require './lib/commands'
 
-class ToyRobot
+class InteractiveRobot
   def run
     print <<EOF
 ===============================================================
-Toy-robot version v1.0
+Roboto version v1.0
 ===============================================================
 Hello master,
 I am the robot at your command, here is my interface description:
@@ -39,3 +39,5 @@ EOF
     end
   end
 end
+
+#InteractiveRobot.new.run

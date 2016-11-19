@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/kirhgoff/toy-robot"
   spec.license       = "LGPL v3.0"
 
-  spec.files         = ['lib/model.rb', 'lib/commands.rb', 'lib/toy-robot.rb']
+  spec.files         = ['lib/model.rb', 'lib/commands.rb', 'lib/roboto.rb']
   spec.executables   = ['bin/toy-robot']
   spec.test_files    = ['tests/test_model.rb', 'tests/test_commands.rb']
   spec.require_paths = ["lib"]

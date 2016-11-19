@@ -1,7 +1,7 @@
 require 'rake/testtask'
+require 'optparse'
 
-require './lib/toy-robot.rb'
-
+require './lib/roboto.rb'
 
 Rake::TestTask.new do |t|
   t.libs << "tests"
@@ -9,8 +9,23 @@ Rake::TestTask.new do |t|
   t.verbose = true
 end
 
-task :run do
-  ToyRobot.new.run
+task :interactive do
+  InteractiveRobot.new.run
 end
 
-task :default => :run
+task :automatic do
+  options = {:input => nil}
+  parser = OptionParser.new do |opts|
+    opts.banner = "Usage: rake automatic [options]"
+    opts.on("-i", "--input file", String) do |file|
+      options[:input] = file
+    end
+  end
+
+  parser.parse!
+
+  AutomaticRobot.new.run(options[:input])
+  exit
+end
+
+task :default => :interactive
