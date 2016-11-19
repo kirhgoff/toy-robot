@@ -57,4 +57,12 @@ class TestModel < Test::Unit::TestCase
     assert_equal(direction(:west).turn_left, direction(:south))
     assert_equal(direction(:west).turn_right, direction(:north))
   end
+
+  def test_direction_is_valid
+    assert_false Direction.is_valid?(:dfdsf)
+    assert_false Direction.is_valid?(nil)
+
+    assert_true Direction.is_valid?(:south)
+    assert_true Direction.is_valid?(:north)
+  end
 end

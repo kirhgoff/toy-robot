@@ -33,6 +33,10 @@ class Direction
 
   attr_reader :value
 
+  def self.is_valid?(symbol)
+    LEFT.key?(symbol)
+  end
+
   def initialize(value)
     unless LEFT.key?(value)
       raise ArgumentError, "Cannot accept value #{value}, should be one of #{LEFT.keys}"
@@ -55,6 +59,7 @@ class Direction
   def ==(other)
     other != nil && value == other.value
   end
+
 end
 
 #----------------------------------

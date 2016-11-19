@@ -6,8 +6,4 @@ module TestUtils
   def direction (v)
     Direction.new(v)
   end
-
-  def command(string, factory, board, roboto)
-    factory.from_string(string).apply(roboto, board)
-  end
 end

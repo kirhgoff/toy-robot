@@ -1,18 +1,45 @@
 class CommandsFactory
   def from_string(string)
-    command = string.upcase #TODO add more parsing
-    case(string)
+    command = string.upcase.split(" ", 2)
+
+    case(command[0])
       when "MOVE" then wrap(MoveCommand.new)
       when "LEFT" then wrap(TurnCommand.new :turn_left)
       when "RIGHT" then wrap(TurnCommand.new :turn_right)
       when "REPORT" then ReportCommand.new
-      when "PLACE" then PlaceCommand.new(Position.new(0, 0), Direction.new(:south))
+      when "PLACE" then
+        params = parse_params command[1]
+        PlaceCommand.new(params[0], params[1])
       else UnknownCommand.new(string)
     end
   end
 
   def wrap (command)
     CheckPlacedCommand.new command
+  end
+
+  def parse_params(string)
+    result = [nil, nil]
+    params = string.split(",")
+    if params.length == 3
+      x = number_or_nil(params[0].strip)
+      y = number_or_nil(params[1].strip)
+      direction = params[2].strip.downcase.intern
+
+      if x != nil && y != nil
+        result[0] = Position.new(x, y)
+      end
+
+      if Direction.is_valid?(direction)
+        result[1] = Direction.new(direction)
+      end
+    end
+    result
+  end
+
+  def number_or_nil(string)
+    number = string.to_i
+    number if number.to_s == string
   end
 end
 
@@ -77,9 +104,19 @@ class PlaceCommand
   end
 
   def apply(robot, board)
-    robot.position = position
-    robot.direction = direction
-    robot.to_s
+    if position != nil && direction != nil
+      if board.is_valid(position)
+        robot.position = position
+        robot.direction = direction
+        robot.to_s
+      else
+        "Master, there is no such place on a board #{position}."
+      end
+    elsif position == nil
+      "Master, you need to tell me where to go!"
+    else
+      "Master, I need direction to face to"
+    end
   end
 end
 
