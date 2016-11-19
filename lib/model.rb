@@ -7,8 +7,8 @@ class Position
 
   def move(direction)
     case direction.value
-      when :north then Position.new(x, y-1)
-      when :south then Position.new(x, y+1)
+      when :north then Position.new(x, y+1)
+      when :south then Position.new(x, y-1)
       when :west then Position.new(x-1, y)
       when :east then Position.new(x+1, y)
       else

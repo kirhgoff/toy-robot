@@ -12,9 +12,13 @@ class TestModel < Test::Unit::TestCase
     assert_true board.is_valid(position(1, 1))
     assert_true board.is_valid(position(0, 0))
     assert_true board.is_valid(position(4, 4))
+    assert_true board.is_valid(position(0, 4))
+    assert_true board.is_valid(position(4, 0))
 
     assert_false board.is_valid(position(-1, 4))
+    assert_false board.is_valid(position(4, -1))
     assert_false board.is_valid(position(0, 5))
+    assert_false board.is_valid(position(5, 0))
   end
 
   def test_equality
@@ -28,8 +32,8 @@ class TestModel < Test::Unit::TestCase
   def test_position_move
     position = Position.new(0, 0)
 
-    assert_equal position(0, -1), position.move(direction(:north))
-    assert_equal position(0, 1), position.move(direction(:south))
+    assert_equal position(0, 1), position.move(direction(:north))
+    assert_equal position(0, -1), position.move(direction(:south))
     assert_equal position(-1, 0), position.move(direction(:west))
     assert_equal position(1, 0), position.move(direction(:east))
   end

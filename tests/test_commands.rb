@@ -28,7 +28,7 @@ class TestCommands < Test::Unit::TestCase
 
   def test_commands
     roboto = Roboto.new
-    board = Board.new(100, 100)
+    board = Board.new(5, 5)
 
     #Not moving
     reply = command("MOVE", board, roboto)
@@ -70,19 +70,19 @@ class TestCommands < Test::Unit::TestCase
 
     #Move to the edge
     command("LEFT", board, roboto) #north
-    command("MOVE", board, roboto) #3, 1
-    command("MOVE", board, roboto) #3, 0
+    command("MOVE", board, roboto) #3, 3
+    command("MOVE", board, roboto) #3, 4
     reply = command("MOVE", board, roboto)
     assert_match(/can't go there/, reply)
-    assert_state(roboto, position(3, 0), direction(:north))
+    assert_state(roboto, position(3, 4), direction(:north))
 
     reply = command("PLACE 666, 666, NorTH", board, roboto)
     assert_match(/no such place/, reply)
-    assert_state(roboto, position(3, 0), direction(:north))
+    assert_state(roboto, position(3, 4), direction(:north))
 
     reply = command("PLACE 5, 5, UP", board, roboto)
     assert_match(/need correct direction/, reply)
-    assert_state(roboto, position(3, 0), direction(:north))
+    assert_state(roboto, position(3, 4), direction(:north))
   end
 
   def assert_state(roboto, position, direction)
