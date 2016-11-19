@@ -9,12 +9,12 @@ class TestModel < Test::Unit::TestCase
   def test_board_is_valid
     board = Board.new(5, 5)
 
-    assert_true(board.is_valid(position(1, 1)))
-    assert_true(board.is_valid(position(0, 0)))
-    assert_true(board.is_valid(position(4, 4)))
+    assert_true board.is_valid(position(1, 1))
+    assert_true board.is_valid(position(0, 0))
+    assert_true board.is_valid(position(4, 4))
 
-    assert_false(board.is_valid(position(-1, 4)))
-    assert_false(board.is_valid(position(0, 5)))
+    assert_false board.is_valid(position(-1, 4))
+    assert_false board.is_valid(position(0, 5))
   end
 
   def test_equality
@@ -28,10 +28,10 @@ class TestModel < Test::Unit::TestCase
   def test_position_move
     position = Position.new(0, 0)
 
-    assert_equal position.move(direction(:north)), position(0, -1)
-    assert_equal position.move(direction(:south)), position(0, 1)
-    assert_equal position.move(direction(:west)), position(-1, 0)
-    assert_equal position.move(direction(:east)), position(1, 0)
+    assert_equal position(0, -1), position.move(direction(:north))
+    assert_equal position(0, 1), position.move(direction(:south))
+    assert_equal position(-1, 0), position.move(direction(:west))
+    assert_equal position(1, 0), position.move(direction(:east))
   end
 
   def test_roboto_placed_report
@@ -49,11 +49,11 @@ class TestModel < Test::Unit::TestCase
   end
 
   def test_turning_works_properly
-    assert_equal(direction(:north).turn_left, direction(:west))
-    assert_equal(direction(:north).turn_right, direction(:east))
+    assert_equal direction(:west), direction(:north).turn_left
+    assert_equal direction(:east), direction(:north).turn_right
 
-    assert_equal(direction(:west).turn_left, direction(:south))
-    assert_equal(direction(:west).turn_right, direction(:north))
+    assert_equal direction(:south), direction(:west).turn_left
+    assert_equal direction(:north), direction(:west).turn_right
   end
 
   def test_direction_is_valid
