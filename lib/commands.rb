@@ -61,7 +61,8 @@ end
 
 class MoveCommand
   def apply(robot, board)
-    new_position = robot.position.move
+    #TODO use lambdas for direction changes
+    new_position = robot.position.move robot.direction
     if board.is_valid(new_position)
       robot.position = new_position
       "Moving. My new position is #{new_position}, master."

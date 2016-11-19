@@ -33,43 +33,61 @@ class TestCommands < Test::Unit::TestCase
     #Not moving
     reply = command("MOVE", board, roboto)
     assert_match(/limbo/, reply)
-    assert_equal roboto.direction, nil
-    assert_equal roboto.position, nil
+    assert_state(roboto, nil, nil)
 
     #Not turning
     reply = command("LEFT", board, roboto)
     assert_match(/limbo/, reply)
-    assert_equal roboto.direction, nil
-    assert_equal roboto.position, nil
+    assert_state(roboto, nil, nil)
 
     #Still reporting
     reply = command("REPORT", board, roboto)
     assert_match(/nowhere/, reply)
     assert_match(/any direction/, reply)
-    assert_equal roboto.direction, nil
-    assert_equal roboto.position, nil
+    assert_state(roboto, nil, nil)
 
     #Place command is working
     reply = command("PLACE 1, 1, SOUTH", board, roboto)
     assert_match(/1\, 1/, reply)
     assert_match(/south/, reply)
-    assert_equal roboto.direction, direction(:south)
-    assert_equal roboto.position, position(1, 1)
+    assert_state(roboto, position(1, 1), direction(:south))
 
     #Place command is working again
     reply = command("PLACE 2, 2, NORTH", board, roboto)
     assert_match(/2\, 2/, reply)
     assert_match(/north/, reply)
-    assert_equal roboto.direction, direction(:north)
-    assert_equal roboto.position, position(2, 2)
+    assert_state(roboto, position(2, 2), direction(:north))
 
-    # #Turn command
-    # reply = command("RIGHT", board, roboto)
-    # assert_match(/2\, 2/, reply)
-    # assert_match(/north/, reply)
-    # assert_equal roboto.direction, direction(:north)
-    # assert_equal roboto.position, position(2, 2)
+    #Turn command
+    reply = command("RIGHT", board, roboto)
+    assert_match(/right/, reply)
+    assert_state(roboto, position(2, 2), direction(:east))
 
+    #Move command
+    reply = command("MOVE", board, roboto)
+    assert_match(/Moving/, reply)
+    assert_state(roboto, position(3, 2), direction(:east))
+
+    #Move after the edge
+    command("LEFT", board, roboto) #north
+    command("MOVE", board, roboto) #3, 1
+    command("MOVE", board, roboto) #3, 0
+    reply = command("MOVE", board, roboto)
+    assert_match(/can't go there/, reply)
+    assert_state(roboto, position(3, 0), direction(:north))
+
+    reply = command("PLACE 666, 666, NorTH", board, roboto)
+    assert_match(/no such place/, reply)
+    assert_state(roboto, position(3, 0), direction(:north))
+
+    reply = command("PLACE 5, 5, UP", board, roboto)
+    assert_match(/need direction/, reply)
+    assert_state(roboto, position(3, 0), direction(:north))
+  end
+
+  def assert_state(roboto, position, direction)
+    assert_equal roboto.direction, direction
+    assert_equal roboto.position, position
   end
 
   def command(string, board, roboto)
