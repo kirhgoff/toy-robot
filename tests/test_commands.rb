@@ -86,8 +86,8 @@ class TestCommands < Test::Unit::TestCase
   end
 
   def assert_state(roboto, position, direction)
-    assert_equal roboto.direction, direction
-    assert_equal roboto.position, position
+    assert_equal direction, roboto.direction
+    assert_equal position, roboto.position
   end
 
   def command(string, board, roboto)
