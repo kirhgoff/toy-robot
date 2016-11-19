@@ -37,17 +37,15 @@ class TestModel < Test::Unit::TestCase
   def test_roboto_placed_report
     roboto = Roboto.new
     assert_false roboto.is_placed?
-    assert_equal roboto.to_s,
-                 "Roboto is nowhere and is not looking at any direction"
+    assert_equal "I am nowhere, not facing any direction", roboto.to_s
 
     roboto.position = position(1, 1)
     assert_false roboto.is_placed?
-    assert_equal roboto.to_s,
-                 "Roboto is at [1, 1] and is not looking at any direction"
+    assert_equal "I am at [1, 1], not facing any direction", roboto.to_s
 
     roboto.direction = :south
     assert_true roboto.is_placed?
-    assert_equal roboto.to_s, "Roboto is at [1, 1] and is looking south"
+    assert_equal "I am at [1, 1], facing south", roboto.to_s
   end
 
   def test_turning_works_properly

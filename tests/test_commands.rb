@@ -68,7 +68,7 @@ class TestCommands < Test::Unit::TestCase
     assert_match(/Moving/, reply)
     assert_state(roboto, position(3, 2), direction(:east))
 
-    #Move after the edge
+    #Move to the edge
     command("LEFT", board, roboto) #north
     command("MOVE", board, roboto) #3, 1
     command("MOVE", board, roboto) #3, 0
@@ -81,7 +81,7 @@ class TestCommands < Test::Unit::TestCase
     assert_state(roboto, position(3, 0), direction(:north))
 
     reply = command("PLACE 5, 5, UP", board, roboto)
-    assert_match(/need direction/, reply)
+    assert_match(/need correct direction/, reply)
     assert_state(roboto, position(3, 0), direction(:north))
   end
 

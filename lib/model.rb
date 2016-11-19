@@ -92,9 +92,9 @@ class Roboto
   def to_s
     position_str = position.nil? ? "nowhere" : "at " + position.to_s
     direction_str = direction.nil? ?
-      "not looking at any direction" : "looking " + direction.to_s
+      "not facing any direction" : "facing " + direction.to_s
 
-    "I am #{position_str} and is #{direction_str}"
+    "I am #{position_str}, #{direction_str}"
   end
 end
 
