@@ -28,28 +28,28 @@ end
 #----------------------------------
 
 class Direction
-  LEFT = {:south => :east, :north => :west, :east => :north, :west => :south}
-  RIGHT = LEFT.invert
+  COUNTERCLOCKWISE = {:south => :east, :north => :west, :east => :north, :west => :south}
+  CLOCKWISE = COUNTERCLOCKWISE.invert
 
   attr_reader :value
 
   def self.is_valid?(symbol)
-    LEFT.key?(symbol)
+    CLOCKWISE.key?(symbol)
   end
 
   def initialize(value)
-    unless LEFT.key?(value)
-      raise ArgumentError, "Cannot accept value #{value}, should be one of #{LEFT.keys}"
+    unless CLOCKWISE.key?(value)
+      raise ArgumentError, "Cannot accept value #{value}, should be one of #{CLOCKWISE.keys}"
     end
     @value = value
   end
 
   def turn_left
-    Direction.new(LEFT[value])
+    Direction.new(COUNTERCLOCKWISE[value])
   end
 
   def turn_right
-    Direction.new(RIGHT[value])
+    Direction.new(CLOCKWISE[value])
   end
 
   def to_s

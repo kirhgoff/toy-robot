@@ -55,6 +55,21 @@ class TestCommands < Test::Unit::TestCase
     assert_match(/south/, reply)
     assert_equal roboto.direction, direction(:south)
     assert_equal roboto.position, position(1, 1)
+
+    #Place command is working again
+    reply = command("PLACE 2, 2, NORTH", board, roboto)
+    assert_match(/2\, 2/, reply)
+    assert_match(/north/, reply)
+    assert_equal roboto.direction, direction(:north)
+    assert_equal roboto.position, position(2, 2)
+
+    # #Turn command
+    # reply = command("RIGHT", board, roboto)
+    # assert_match(/2\, 2/, reply)
+    # assert_match(/north/, reply)
+    # assert_equal roboto.direction, direction(:north)
+    # assert_equal roboto.position, position(2, 2)
+
   end
 
   def command(string, board, roboto)
